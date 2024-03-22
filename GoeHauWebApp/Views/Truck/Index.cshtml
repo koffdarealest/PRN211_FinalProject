@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    var Trucks = ViewBag.Trucks as List<Truck>;
+    var Users = ViewBag.Users as List<User>;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                License Plate
+            </th>
+            <th>
+                Driver
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Trucks) {
+        <tr>
+            <td>
+                @item.LicensePlate
+            </td>
+            <td>
+                @if(item.Driver != null)
+                @item.Driver.Fullname
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

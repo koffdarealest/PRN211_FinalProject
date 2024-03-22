@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    var Orders = ViewBag.Orders as List<Order>;
+    var Products = ViewBag.Products as List<Product>;
+    var Trucks = ViewBag.Trucks as List<Truck>;
+    var UserId = HttpContextAccessor.HttpContext.Session.GetString("Id");
+    var UserRole = HttpContextAccessor.HttpContext.Session.GetString("Role");
+    int Id = int.Parse(UserId);
+    int Role = int.Parse(UserRole);
+    Layout = null;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product
+            </th>
+            <th>
+                Order Date
+            </th>
+            <th>
+                Required Date
+            </th>
+            <th>
+                Shipped Date
+            </th>
+            <th>
+                Ship To Address
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Total price
+            </th>
+            <th>
+                Truck
+            </th>          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Orders) {
+        <tr>
+            <td>
+                @item.Product.Name
+            </td>
+            <td>
+                @item.OrderDate
+            </td>
+            <td>
+                @item.RequiredDate
+            </td>
+            <td>
+                @item.ShippedDate
+            </td>
+            <td>
+                @item.Destination
+            </td>
+            <td>
+                @item.Quantity
+            </td>
+            <td>
+                @item.TotalPrice
+            </td>
+            <td>
+                @item.Truck.LicensePlate
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
